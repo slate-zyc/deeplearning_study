@@ -16,6 +16,10 @@
 细节:
     Tensor方式较之于 tensor方式, 可以基于 形状来直接创建张量.
 
+张量的数据类型:
+    张量中默认的数据类型是 float32(torch.FloatTensor)
+    NumPy 里浮点数默认通常是 float64，也就是双精度浮点数。所以从 NumPy 转到 PyTorch 时，如果不指定 dtype，就会变成 float64。
+
 需要你掌握的方式:
     tensor(值, 类型), 例如:
         data = np.random.randint(0, 10, size=(2, 3))
@@ -40,6 +44,7 @@ def dm01():
     print('-' * 30)
 
     # 场景3: numpy nd数组 -> 张量.
+    # NumPy 里浮点数默认通常是 float64，也就是双精度浮点数。所以从 NumPy 转到 PyTorch 时，如果不指定 dtype，就会变成 float64。
     data = np.random.randint(0, 10, size=(2, 3))
     t3 = torch.tensor(data, dtype=torch.float)      # dtype 指定数据类型
     print(f't3: {t3}, type: {type(t3)}')
