@@ -5,7 +5,7 @@
 涉及到的函数:
     torch.arange() 和 torch.linspace() 创建线性张量
     torch.random.initial_seed() 和 torch.random.manual_seed() 随机种子设置
-    torch.rand/randn() 创建随机浮点类型张量
+    torch.rand/randn() 创建随机浮点类型张量，均匀分布/正态分布
     torch.randint(low, high, size=()) 创建随机整数类型张量
 
 要掌握的函数:
@@ -19,7 +19,7 @@ import torch
 def dm01():
     # 场景1: 创建指定范围的 线性张量.
     # 参1: 起始值, 参2: 结束值, 参3: 步长.
-    t1 = torch.arange(0, 10, 2)     # 0, 2, 4, 6, 8
+    t1 = torch.arange(0, 10, 2)     # 0, 2, 4, 6, 8 包左不包右
     print(f't1: {t1}, type: {type(t1)}')
     print('-' * 30)
 
@@ -27,6 +27,7 @@ def dm01():
     # 参1: 起始值, 参2: 结束值, 参3: 元素的个数
     t2 = torch.linspace(1, 10, 4)
     print(f't2: {t2}, type: {type(t2)}')
+    print('*' * 30)
 
 
 # 2. 定义函数, 演示: 创建随机张量.
@@ -52,5 +53,5 @@ def dm02():
 
 # 3. 测试函数.
 if __name__ == '__main__':
-    # dm01()
+    dm01()
     dm02()
