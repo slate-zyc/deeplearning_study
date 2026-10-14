@@ -33,8 +33,10 @@ def dm01():
 # 2. 定义函数, 演示: 创建随机张量.
 def dm02():
     # step1: 设置随机种子.
-    # torch.initial_seed()    # 默认采用当前系统的时间戳作为随机种子.
-    torch.manual_seed(3)      # 设置随机种子.
+    # torch.initial_seed()              # 默认采用当前系统的时间戳作为随机种子.
+    # print(torch.initial_seed())       # 查看随机种子，会返回时间戳
+    torch.manual_seed(3)                # 设置随机种子.
+    print(torch.initial_seed())         # 查看随机种子，会返回 3
 
     # step2: 创建随机张量.
     # 场景1: 均匀分布的(0, 1) 随机张量
