@@ -9,6 +9,8 @@
 
 需要你掌握的函数:
     zeros(), full()
+    偏置bias很多时候忽略，但偏置这一项不能省略，使用可以使用zeros()填充偏置.
+    full()用于填充指定值.
 """
 
 # 导包
@@ -26,7 +28,7 @@ print(f't2: {t2}, type: {type(t2)}')
 print('-' * 30)
 
 # t3 -> 基于t2的形状, 创建全1张量.
-t3 = torch.ones_like(t2)
+t3 = torch.ones_like(t2)    # ones_like的输入需要为 Tensor 类
 print(f't3: {t3}, type: {type(t3)}')    # 3行2列 -> 全1矩阵
 print('*' * 30)
 
@@ -42,7 +44,7 @@ print(f't2: {t2}, type: {type(t2)}')
 print('-' * 30)
 
 # t3 -> 基于t2的形状, 创建全0张量.
-t3 = torch.zeros_like(t2)
+t3 = torch.zeros_like(t2)   # zeros_like的输入需要为 Tensor 类
 print(f't3: {t3}, type: {type(t3)}')    # 3行2列 -> 全0矩阵
 print('*' * 30)
 
@@ -58,5 +60,5 @@ print(f't2: {t2}, type: {type(t2)}')
 print('-' * 30)
 
 # t3 -> 基于t2的形状, 创建全255张量.
-t3 = torch.full_like(t2, 255)
+t3 = torch.full_like(t2, 255)   # full_like的输入需要为 Tensor 类
 print(f't3: {t3}, type: {type(t3)}')    # 3行2列 -> 全0矩阵
