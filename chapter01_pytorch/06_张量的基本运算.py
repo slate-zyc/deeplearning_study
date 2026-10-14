@@ -3,12 +3,13 @@
     演示张量的基本运算.
 
 涉及到的API:
-    add(), sub(), mul(), div(), neg()       -> 加减乘除, 取反, substract, multiply, divide
+    add(), sub(), mul(), div(), neg()       -> 加减乘除, 取反; addition, substract, multiply, divide
     add_(), sub_(), mul_(), div_(), neg_()  -> 功能同上, 只不过可以修改源数据, 类似于 Pandas部分的 inplace = True
 
 需要你记忆的:
     1. 可以用 +, -, *, / 符号来替代 上述的 加减乘除函数.
     2. 如果是张量 和 数值运算, 则: 该数值会和张量中的每个值依次进行 对应的运算.
+    3. // 表示整数除法
 """
 
 # 导包
