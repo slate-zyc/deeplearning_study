@@ -7,7 +7,7 @@
     half()/double()/float()/short()/int()/long()
 
 你要掌握的函数:
-    type()
+    .type()
 """
 
 # 导包
@@ -25,7 +25,7 @@ print(f't2: {t2}, (元素)类型: {t2.dtype}, (张量)类型: {type(t2)}')  # in
 print('-' * 30)
 
 
-# 思路2: half()/double()/float()/short()/int()/int()
+# 思路2: half()/double()/float()/short()/int()/long()
 print(t2.half())        # float16
 print(t2.float())       # float32, 默认
 print(t2.double())      # float64
