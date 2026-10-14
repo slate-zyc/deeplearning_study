@@ -2,10 +2,12 @@
 案例:
     演示张量常用的运算函数.
 涉及到的 API(函数) 如下:
-    sum(), max(), min(), mean()                     -> 都有 dim 参数, 0表示列, 1表示行
+    sum(), max(), min(), mean()                     -> 都有 dim 参数, 0表示列, 1表示行, 省略表示整体
     pow(), sqrt(), exp(), log(), log2(), log10()    -> 没有dim参数
 掌握的函数:
     sum(), max(), min(), mean()
+    计算均值必须传入浮点数类型的张量。
+    dim=0 按列计算，dim=1 按行计算，省略 dim 表示整体计算
 """
 # 导包
 import torch
@@ -30,7 +32,7 @@ print(t1.max(dim=1))        # 按 行 求最大值
 print(t1.max())             # 整 体 求最大值
 print('-' * 30)
 
-# mean(), 计算平均值
+# mean(), 计算平均值，必须需要浮点数
 print(t1.mean(dim=0))        # 按 列 求平均值
 print(t1.mean(dim=1))        # 按 行 求平均值
 print(t1.mean())             # 整 体 求平均值
@@ -39,12 +41,14 @@ print('*' * 30)
 # 3. 演示 没有dim参数的 函数.
 # pow() n次幂
 print(t1.pow(2))            # 每个数的平方
+print(torch.pow(t1, 2))     # 效果同上
 print(t1.pow(3))            # 每个数的立方
 print(t1 ** 3)              # 效果同上.
 print('-' * 30)
 
 # sqrt() 平方根
 print(t1.sqrt())            # 每个数的平方根
+print(t1 ** (1/2))          # 效果同上
 print('-' * 30)
 
 # exp() e的n次幂,  n就是矩阵中的每个元素, 这里是: e^1, e^2, e^3, e^4, e^5, e^6
