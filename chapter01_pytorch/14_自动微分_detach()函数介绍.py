@@ -1,6 +1,6 @@
 """
 案例:
-    演示 detach()函数的功能, 解决 自动微分的弊端.
+    演示 detach()函数的功能, 解决 自动微分的弊端. 实现将自动微分的张量转 numpy 数组
 
 回顾:
     自动微分 = 求导, 即: 基于损失函数, 计算梯度.
@@ -34,6 +34,9 @@ print(f't2: {t2}, type: {type(t2)}')
 t1.data[0] = 100
 print(f't1: {t1}, type: {type(t1)}')
 print(f't2: {t2}, type: {type(t2)}')
+## 或者
+print(id(t1.data))    # id() 是 Python 内置函数。它返回对象的唯一标识符，
+print(id(t2.data))    # 在 CPython 中通常就是该对象的内存地址（一个整数）
 print('-' * 30)
 
 # 5. 查看t1 和 t2谁可以自动微分.
