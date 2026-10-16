@@ -27,7 +27,7 @@ b = torch.randn(3, requires_grad=True)
 print(f'b: {b}')
 
 # 4. 前向转播(正向传播), 计算出 预测值(z).
-z = torch.matmul(x, w) + b
+z = torch.matmul(x, w) + b      # XW 还是 WX 是自己规定的，要符合矩阵乘法规则
 # z = x @ w + b
 print(f'z: {z}')
 
