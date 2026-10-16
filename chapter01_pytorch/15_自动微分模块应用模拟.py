@@ -27,9 +27,14 @@ b = torch.randn(3, requires_grad=True)
 print(f'b: {b}')
 
 # 4. 前向转播(正向传播), 计算出 预测值(z).
-z = torch.matmul(x, w) + b      # XW 还是 WX 是自己规定的，要符合矩阵乘法规则
+z = torch.matmul(x, w) + b
 # z = x @ w + b
 print(f'z: {z}')
+'''
+矩阵乘法，XW 还是 WX 是自己规定的，要符合矩阵乘法规则。
+这主要取决于一条样本是按行排列还是按列排列，但可以通过转置操作来相互转化，所以怎么写都是可以的;
+这里的矩阵和向量的加法是通过广播机制来实现的
+'''
 
 # 5. 定义损失函数.
 criterion = torch.nn.MSELoss()  # neural network: 神经网络
