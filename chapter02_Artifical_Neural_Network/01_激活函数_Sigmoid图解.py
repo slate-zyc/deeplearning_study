@@ -31,7 +31,7 @@ plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
 
 # 1. 创建画布和坐标轴, 1行2列.
-fig, axes = plt.subplots(1, 2)
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 
 # 2. 生成 -20 ~ 20之间的 1000个数据点.
 x = torch.linspace(-20, 20, 1000)
@@ -59,3 +59,30 @@ axes[1].plot(x.detach(), x.grad)
 axes[1].set_title('Sigmoid激活函数导数图像')
 axes[1].grid()
 plt.show()
+
+# 使用 numpy 画法
+# import numpy as np
+# import matplotlib.pyplot as plt
+#
+# # 解决中文显示问题
+# plt.rcParams['font.sans-serif'] = ['SimHei']  # Windows 用黑体
+# plt.rcParams['axes.unicode_minus'] = False
+#
+# x = np.linspace(-20, 20, 1000)
+# sigmoid = 1 / (1 + np.exp(-x))
+# sigmoid_derivative = sigmoid * (1 - sigmoid)
+#
+# fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
+#
+# # 绘制 Sigmoid 函数
+# ax1.plot(x, sigmoid)
+# ax1.set_title('Sigmoid 函数图像')
+# ax1.grid(True)
+#
+# # 绘制 Sigmoid 导数
+# ax2.plot(x, sigmoid_derivative)
+# ax2.set_title('Sigmoid 导数图像')
+# ax2.grid(True)
+#
+# plt.tight_layout()
+# plt.show()

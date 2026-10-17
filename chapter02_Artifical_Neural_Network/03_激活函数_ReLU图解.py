@@ -41,7 +41,7 @@ plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
 
 # 1. 创建画布和坐标轴, 1行2列.
-fig, axes = plt.subplots(1, 2)
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 
 # 2. 生成 -20 ~ 20之间的 1000个数据点.
 x = torch.linspace(-20, 20, 1000)
@@ -69,3 +69,33 @@ axes[1].plot(x.detach(), x.grad)
 axes[1].set_title('ReLU激活函数导数图像')
 axes[1].grid()
 plt.show()
+
+
+# numpy 画法
+# import numpy as np
+# import matplotlib.pyplot as plt
+#
+# # 解决中文显示问题
+# plt.rcParams['font.sans-serif'] = ['SimHei']  # Windows 用黑体
+# plt.rcParams['axes.unicode_minus'] = False
+#
+# x = np.linspace(-20, 20, 1000)
+# # ReLU 函数：max(0, x)
+# relu = np.maximum(0, x)
+# # ReLU 导数：大于0时为1，小于等于0时为0
+# relu_derivative = np.where(x > 0, 1, 0)
+#
+# fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
+#
+# # 绘制 ReLU 函数
+# ax1.plot(x, relu)
+# ax1.set_title('ReLU 函数图像')
+# ax1.grid(True)
+#
+# # 绘制 ReLU 导数
+# ax2.plot(x, relu_derivative)
+# ax2.set_title('ReLU 导数图像')
+# ax2.grid(True)
+#
+# plt.tight_layout()
+# plt.show()
