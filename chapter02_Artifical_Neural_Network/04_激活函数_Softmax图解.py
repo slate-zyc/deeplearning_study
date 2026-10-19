@@ -46,15 +46,29 @@ Sigmoid激活函数介绍:
 
 # 导包
 import torch
-import matplotlib.pyplot as plt
-
-plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
-plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
-
 
 # 1. 定义张量, 记录: 分类数据.
-# scores = torch.tensor([0.2, 0.02, 0.15, 0.15, 1.3, 0.5, 0.06, 1.1, 0.05, 3.75])
-scores = torch.tensor([[0.2, 0.35, 0.1, 0.46], [0.1, 0.13, 0.05, 2.79]])
+scores1 = torch.tensor([0.2, 0.02, 0.15, 0.15, 1.3, 0.5, 0.06, 1.1, 0.05, 3.75])
+
 # 2. dim = 0, 按行计算
-probabilities = torch.softmax(scores, dim=1)
-print(probabilities)
+probabilities1 = torch.softmax(scores1, dim=0)
+print(probabilities1)
+
+# 演示二维张量 dim 的计算方式
+scores2 = torch.tensor([[0.2, 0.35, 0.1, 0.46], [0.1, 0.13, 0.05, 2.79]])
+probabilities2 = torch.softmax(scores2, dim=1)  # dim=1 在列上计算，对于二维张量，也就是把每一行（横向）的数据分别做 Softmax。
+print(probabilities2)
+
+scores3 = torch.tensor([[0.2, 0.35, 0.1, 0.46], [0.1, 0.13, 0.05, 2.79]])
+probabilities3 = torch.softmax(scores3, dim=0)  # dim=0 在行上计算，对于二维张量，也就是把每一列（纵向）的数据分别做 Softmax。
+print(probabilities3)
+
+'''
+如何理解 dim
+    在 PyTorch（以及 NumPy）中，理解 dim 最好的方法是看它“消融/归一化”了哪个维度：
+
+    dim=0：**沿着**第 0 维（行）的方向操作，所以结果是竖着加起来等于 1。（常用于对比不同样本在同一特征上的分布）
+    dim=1：**沿着**第 1 维（列）的方向操作，所以结果是横着加起来等于 1。（常用于多分类任务，一张图片/一个样本对应多个类别，是标准用法）
+
+    如果是图像分类任务（比如 [batch_size, num_classes]），永远使用 dim=1，因为我们要让每个样本在所有类别上的概率之和为 1。
+'''
