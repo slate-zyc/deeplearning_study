@@ -24,10 +24,6 @@
 # 导包
 import torch.nn as nn       # neural network: 神经网络
 
-
-import torch.nn as nn
-
-
 # 1. 均匀分布随机初始化
 def dm01():
     # 1. 创建1个线性层, 输入维度5, 输出维度3
@@ -82,7 +78,7 @@ def dm05():
     # 1. 创建1个线性层, 输入维度5, 输出维度3
     linear = nn.Linear(5, 3)
     # 2. 对权重(w)进行初始化, 正态分布初始化(均值为0, 标准差为1)
-    nn.init.normal_(linear.weight)
+    nn.init.normal_(linear.weight, mean=0, std=1)
     # 3. 打印生成结果.
     print(linear.weight.data)
 
@@ -93,10 +89,10 @@ def dm06():
     linear = nn.Linear(5, 3)
     # 2. 对权重(w)进行初始化, 正态分布初始化(均值为0, 标准差为1)
     # kaiming 正态分布初始化
-    # nn.init.kaiming_normal_(linear.weight)
+    # nn.init.kaiming_normal_(linear.weight, nonlinearity='relu')
 
     # kaiming 均匀分布初始化
-    nn.init.kaiming_uniform_(linear.weight)
+    nn.init.kaiming_uniform_(linear.weight, nonlinearity='relu')
 
     # 3. 打印生成结果.
     print(linear.weight.data)
@@ -122,10 +118,10 @@ def dm07():
 
 # 测试
 if __name__ == '__main__':
-    # dm01()        # 均匀分布随机初始化
-    # dm02()        # 固定初始化
-    # dm03()        # 全0初始化
-    # dm04()        # 全1初始化
-    # dm05()        # 正态分布
-    # dm06()        # kaiming初始化
+    dm01()        # 均匀分布随机初始化
+    dm02()        # 固定初始化
+    dm03()        # 全0初始化
+    dm04()        # 全1初始化
+    dm05()        # 正态分布
+    dm06()        # kaiming初始化
     dm07()          # xavier初始化
