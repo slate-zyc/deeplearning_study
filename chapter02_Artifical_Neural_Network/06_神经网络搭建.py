@@ -9,15 +9,16 @@
     4. 模型测试
 
 神经网络搭建流程:
-    1. 定义一个类, 继承: nn.Module
-    2. 在__init__()方法中, 搭建神经网络.
-    3. 在 forward()方法中,完成: 前向传播.
+    1. 定义一个类, 继承 nn.Module
+    2. 在__init__()方法中, 搭建神经网络.（首先要初始化父类成员super().__init__()）
+    3. 在 forward()方法中, 完成 前向传播.
 """
 
 # 导包
 import torch
 import torch.nn as nn
-from torchsummary import summary  # 计算模型参数,查看模型结构, pip install torchsummary -i https://mirrors.aliyun.com/pypi/simple/
+from torchsummary import summary  # 计算模型参数, 查看模型结构
+# pip install torchsummary -i https://mirrors.aliyun.com/pypi/simple/
 
 
 # todo: 1.搭建神经网络, 即: 自定义继承 nn.Module
@@ -65,6 +66,7 @@ class ModelDemo(nn.Module):
 
 
 # todo: 2.模型训练.
+## 注意和前面的自定义类是平级的
 def train():
     # 1. 创建模型对象.
     my_model = ModelDemo()
@@ -77,7 +79,7 @@ def train():
     print(f'data.requires_grad: {data.requires_grad}')  # False
 
     # 3. 调用神经网络模型 -> 进行模型训练.
-    output = my_model(data)     # 底层自动调用了 forward()方法, 进行 前向传播.
+    output = my_model(data)     # 底层自动调用了 forward() 方法, 进行 前向传播.
     print(f'output: {output}')
     print(f'output.shape: {output.shape}')                  # (5行, 2列)
     print(f'output.requires_grad: {output.requires_grad}')  # True
@@ -86,7 +88,8 @@ def train():
     # 4. 计算 和 查看模型参数.
     print('=================== 计算模型参数 ===================')
     # 参1: (神经网络)模型对象, 参2: 输入数据维度(5行3列)
-    summary(my_model, input_size=(5, 3))
+    summary(my_model, input_size=(5, 3))                # 数据维度是5行3列，batch不确定，所以默认-1，即模型输入是 [B, 5, 3] 的序列/图像块
+    summary(my_model, input_size=(3,), batch_size=5)    # 数据维度是一维，这里相当于是每个样本有3个特征，batch_size为5，即模型输入是 [B, 3] 的向量（最常见）
 
     print('=================== 查看模型参数 ===================')
     for name, param in my_model.named_parameters():
