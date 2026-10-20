@@ -31,13 +31,15 @@
 # 导包
 import torch
 import torch.nn as nn
+from torch._C import dtype
 
 
 # 1. 定义函数, 演示: 多分类交叉熵损失.
 def dm01():
     # 1. 手动创建样本的真实值 -> 就是上述公式中的 y
     y_true = torch.tensor([[0, 1, 0], [1, 0, 0]], dtype=torch.float)
-    # y_true = torch.tensor([1, 2])
+    # y_true = torch.tensor([1, 2])   # 类型必须是64为整数数据，pytorch默认整数数据类型就为int64
+    # print(y_true.dtype)   # torch.int64
 
     # 2. 手动创建样本的预测值 -> 就是上述公式中的 f(x)
     y_pred = torch.tensor([[0.1, 0.8, 0.1], [0.7, 0.2, 0.1]], requires_grad=True, dtype=torch.float)
