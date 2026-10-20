@@ -4,7 +4,7 @@
 
 二分类任务的损失函数(BCELoss):
     公式:
-        Loss = -ylog(预测值) - (1 - y)log(1 - 预测值)
+        Loss = mean[-ylog(预测值) - (1 - y)log(1 - 预测值)]
     细节:
         因为公式中没有包含Sigmoid激活函数, 所以使用BCELoss的时候, 还需要手动指定 Sigmoid.
 """
