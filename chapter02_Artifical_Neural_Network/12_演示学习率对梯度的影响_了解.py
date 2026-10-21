@@ -62,3 +62,102 @@ def dm01():
     plt.show()
 
 dm01()
+
+
+# # 合并绘图
+#
+# import torch
+# import matplotlib.pyplot as plt
+# import matplotlib.gridspec as gridspec
+#
+# # 设置中文字体，防止中文显示为方块 (Windows一般用SimHei，Mac用Arial Unicode MS)
+# plt.rcParams['font.sans-serif'] = ['SimHei']
+# plt.rcParams['axes.unicode_minus'] = False
+#
+#
+# def func(x_t):
+#     return torch.pow(2 * x_t, 2)  # y = 4 x ^2
+#
+#
+# def run_experiment(lr, max_iteration, ax1, ax2, title_text):
+#     """
+#     运行单次梯度下降实验并绘图
+#     """
+#     x = torch.tensor([2.], requires_grad=True)
+#     iter_rec, loss_rec, x_rec = list(), list(), list()
+#
+#     for i in range(max_iteration):
+#         y = func(x)
+#         y.backward()
+#
+#         x_rec.append(x.item())
+#         loss_rec.append(y.item())
+#         iter_rec.append(i)
+#
+#         # 更新参数: x = x - lr * grad
+#         x.data.sub_(lr * x.grad)
+#         x.grad.zero_()
+#
+#     # 绘制左图：迭代次数 vs Loss
+#     ax1.plot(iter_rec, loss_rec, '-ro')
+#     ax1.set_title(title_text, color='red', fontsize=14, loc='right')
+#     ax1.grid()
+#     ax1.set_xlabel("Iteration X")
+#     ax1.set_ylabel("Loss value Y")
+#     # 限制y轴范围，防止爆炸时图像压缩太严重
+#     # if lr >= 0.3:
+#     #     ax1.set_ylim([0, 130])
+#     # else:
+#     #     ax1.set_ylim([0, 18])
+#
+#     # 绘制右图：函数曲线和下降轨迹
+#     x_t = torch.linspace(-3, 3, 100)
+#     y_t = func(x_t)
+#     ax2.plot(x_t.detach().numpy(), y_t.detach().numpy(), label="y = 4*x^2")
+#
+#     y_rec = [func(torch.tensor(i)).item() for i in x_rec]
+#     ax2.plot(x_rec, y_rec, '-ro')
+#
+#     ax2.grid()
+#     # ax2.set_xlim([-3, 3])
+#     # 同样限制y轴，防止轨迹飞出天际
+#     # ax2.set_ylim([0, 36])
+#     ax2.legend()
+#
+#
+# def main():
+#     # 创建画布
+#     fig = plt.figure(figsize=(16, 8))
+#     # 划分为2行6列，每个学习率实验占用2列（1列画左图，1列画右图）
+#     gs = gridspec.GridSpec(2, 6)
+#
+#     # 第一行：lr = 0.01, 0.1, 0.125
+#     ax1_1 = fig.add_subplot(gs[0, 0])
+#     ax1_2 = fig.add_subplot(gs[0, 1])
+#     run_experiment(0.01, 4, ax1_1, ax1_2, "学习率0.01")
+#
+#     ax2_1 = fig.add_subplot(gs[0, 2])
+#     ax2_2 = fig.add_subplot(gs[0, 3])
+#     run_experiment(0.1, 4, ax2_1, ax2_2, "学习率0.1")
+#
+#     ax3_1 = fig.add_subplot(gs[0, 4])
+#     ax3_2 = fig.add_subplot(gs[0, 5])
+#     run_experiment(0.125, 4, ax3_1, ax3_2, "学习率0.125")
+#
+#     # 第二行：lr = 0.2, 0.3
+#     ax4_1 = fig.add_subplot(gs[1, 0])
+#     ax4_2 = fig.add_subplot(gs[1, 1])
+#     run_experiment(0.2, 4, ax4_1, ax4_2, "学习率0.2")
+#
+#     ax5_1 = fig.add_subplot(gs[1, 2])
+#     ax5_2 = fig.add_subplot(gs[1, 3])
+#     # 0.3 时梯度爆炸，3次迭代就飞了
+#     run_experiment(0.3, 4, ax5_1, ax5_2, "学习率0.3")
+#
+#     # 调整子图间距
+#     plt.tight_layout()
+#     plt.show()
+#
+#
+# if __name__ == '__main__':
+#     main()
