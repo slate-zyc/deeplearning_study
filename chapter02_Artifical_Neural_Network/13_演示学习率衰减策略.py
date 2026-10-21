@@ -106,9 +106,10 @@ def dm01():
 
     # 14. 可视化.
     # x轴: 训练的轮数, y轴: 每轮训练用的学习率
-    plt.plot(epoch_list, lr_list)
+    plt.plot(epoch_list, lr_list, label = "Step LR Scheduler")
     plt.xlabel('Epoch')
     plt.ylabel('Learning Rate')
+    plt.legend()
     plt.show()
 
 
@@ -167,9 +168,10 @@ def dm02():
 
     # 14. 可视化.
     # x轴: 训练的轮数, y轴: 每轮训练用的学习率
-    plt.plot(epoch_list, lr_list)
+    plt.plot(epoch_list, lr_list, label="Multi Step LR Scheduler\nmilestones:{}".format(milestones))
     plt.xlabel('Epoch')
     plt.ylabel('Learning Rate')
+    plt.legend()
     plt.show()
 
 
@@ -231,9 +233,10 @@ def dm03():
 
     # 14. 可视化.
     # x轴: 训练的轮数, y轴: 每轮训练用的学习率
-    plt.plot(epoch_list, lr_list)
+    plt.plot(epoch_list, lr_list, label="Exponential LR Scheduler\ngamma:0.95")
     plt.xlabel('Epoch')
     plt.ylabel('Learning Rate')
+    plt.legend()
     plt.show()
 
 
@@ -241,6 +244,6 @@ def dm03():
 
 # 4. 测试
 if __name__ == '__main__':
-    # dm01()
-    # dm02()
+    dm01()
+    dm02()
     dm03()
