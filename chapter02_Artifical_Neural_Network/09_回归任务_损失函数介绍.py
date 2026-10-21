@@ -7,7 +7,7 @@
     MAE:   Mean Absolute Error, 平均绝对误差.
         公式:
             误差绝对值之和 / 样本总数
-        类似于L1正则化, 权重可以降维0, 数据会变得稀疏.
+        类似于L1正则化, 权重可以降为0, 数据会变得稀疏.
 
         弊端:
             在0点不平滑, 可能错过最小值.
@@ -55,7 +55,7 @@ def dm02():
     y_pred = torch.tensor([1.0, 1.0, 1.9], requires_grad=True)
 
     # 3. 创建MSE损失函数对象.
-    criterion = nn.MSELoss()
+    criterion = nn.MSELoss()    # 没有 L2Loss 这个API
 
     # 4. 计算损失.
     loss = criterion(y_pred, y_true)
@@ -86,6 +86,6 @@ def dm03():
 
 # 4. 测试
 if __name__ == '__main__':
-    # dm01()    # 0.699999988079071
-    # dm02()    # 0.6700000166893005
+    dm01()      # 0.699999988079071
+    dm02()      # 0.6700000166893005
     dm03()      # 0.33500000834465027
