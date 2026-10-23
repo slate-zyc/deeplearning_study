@@ -1,11 +1,12 @@
 # Deep Learning 课程依赖清单
 #
 # 推荐使用阿里云镜像安装（在大陆网络下速度更快）：
-# pip/conda install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+# conda/pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 
 # ---------------- 深度学习框架 ----------------
-torch
-
+torch               # pytorch 框架
+torchsummary        # 查看神经网络结构
+torchvision         # PyTorch 官方生态系统中的一个核心库，专门为计算机视觉（Computer Vision）任务提供支持
 # ---------------- 机器学习 / 数据处理 ----------------
 sklearn
 numpy
