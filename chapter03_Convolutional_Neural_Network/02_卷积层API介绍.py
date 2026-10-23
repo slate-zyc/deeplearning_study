@@ -28,8 +28,12 @@ import matplotlib.pyplot as plt
 
 # 1. 定义函数, 用于完成图像的加载, 卷积, 特征图可视化操作.
 def dm01():
+
+    torch.manual_seed(123)
+
     # 1. 加载RGB真彩图.
-    img = plt.imread('./data/a.jpg')
+    img = plt.imread('./data/img.jpg')
+    # img = plt.imread('./data/a.jpg')
     # 2. 打印读取到的图像信息.
     # print(f'img: {img}, shape: {img.shape}')     # HWC (640, 640, 3)
 
@@ -61,8 +65,17 @@ def dm01():
     # print(f'img5: {img5}, shape: {img5.shape}')       # (319, 319, 4) -> HWC
 
     # 10. 可视化第1个通道的特征图.
-    feature1 = img5[:, :, 3].detach().numpy()           # 第0通道(即: 第1通道的)  (319, 319)像素图
-    plt.imshow(feature1)
+    # feature1 = img5[:, :, 0].detach().numpy()           # 第0通道(即: 第1通道的)  (319, 319)像素图
+    # plt.imshow(feature1)
+    # plt.show()
+
+    # 一行四列可视化4个通道的特征图
+    fig, axes = plt.subplots(1, 4, figsize=(20, 5))
+    for i, ax in enumerate(axes):
+        ax.imshow(img5[:, :, i].detach().numpy())   # cmap='gray' 表示灰度图
+        # ax.set_title(f'feature map {i}')      # 设置子图标题
+        # ax.axis('off')    # 关闭坐标轴
+    plt.tight_layout()      # 自动调整子图之间的间距和边距，
     plt.show()
 
 
