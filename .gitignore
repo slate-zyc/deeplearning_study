@@ -14,5 +14,8 @@ venv/
 env/
 .venv/
 
+# 忽略代码运行结果产生图片
+/chapter03_Convolutional_Neural_Network/data/img_copy.png
+
 ## 忽略 Jupyter 检查点
 #.ipynb_checkpoints/
