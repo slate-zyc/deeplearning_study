@@ -28,14 +28,29 @@ def dm01():
 
     # 2. 绘制图片.
     plt.imshow(img1)
-    # plt.axis('off')
+    # plt.axis('off')   # off:关闭坐标轴
     plt.show()
 
     # 2. 定义全白图片.
+    # img2 = np.full(shape=[200, 200, 3], fill_value=255)
     img2 = torch.full(size=(200, 200, 3), fill_value=255)
     # print(f'img2: {img2}')
     plt.imshow(img2)
     # plt.axis('off')
+    plt.show()
+
+    # 3. 一行两列排版
+    fig, axes = plt.subplots(1, 2, figsize=(8, 4))  # 1行2列
+
+    axes[0].imshow(img1)
+    # axes[0].set_title("img1 (black)")
+    # axes[0].axis('off')          # 关闭坐标轴
+
+    axes[1].imshow(img2)
+    # axes[1].set_title("img2 (white)")
+    # axes[1].axis('off')
+
+    plt.tight_layout()
     plt.show()
 
 # 2. 定义函数, 加载图片.
@@ -43,17 +58,18 @@ def dm02():
     # 1. 加载图片.
     img1 = plt.imread('./data/img.jpg')
     # print(f'img1: {img1}')
-    # print(f'img1.shape: {img1.shape}')  # (640, 640, 3), HWC
+    print(f'img1.shape: {img1.shape}')  # (640, 640, 3), HWC
 
     # 2. 保存图像.
     plt.imsave('./data/img_copy.png', img1)
 
     # 3. 展示图像.
     plt.imshow(img1)
+    plt.axis('off')
     plt.show()
 
 
 # 3. 测试
 if __name__ == '__main__':
-    # dm01()
+    dm01()
     dm02()
