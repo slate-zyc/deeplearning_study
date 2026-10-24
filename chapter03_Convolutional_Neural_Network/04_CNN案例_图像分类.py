@@ -31,7 +31,7 @@
 import torch
 import torch.nn as nn
 from torchvision.datasets import CIFAR10
-from torchvision.transforms import ToTensor  # pip install torchvision -i https://mirrors.aliyun.com/pypi/simple/
+from torchvision.transforms import ToTensor
 import torch.optim as optim
 from torch.utils.data import DataLoader
 import time
@@ -45,8 +45,20 @@ BATCH_SIZE = 8
 # 1. 准备数据集.
 def create_dataset():
     # 1. 获取训练集.
-    # 参1: 数据集路径. 参2: 是否是训练集. 参3: 数据预处理 -> 张量数据. 参4: 是否联网下载(直接用我给的, 不用下)
+    # 参1: 数据集路径. 参2: 是否是训练集. 参3: 数据预处理 -> 张量数据. 参4: 是否联网下载(有这个数据集不会再下载)
     train_dataset = CIFAR10(root='./data', train=True, transform=ToTensor(), download=True)
+    # 下载后会得到：
+    # ./data/
+    # ├── cifar-10-python.tar.gz  # 下载的原始压缩包
+    # └── cifar-10-batches-py/  # 解压后的数据集文件夹
+    # ├── batches.meta
+    # ├── data_batch_1
+    # ├── data_batch_2
+    # ├── data_batch_3
+    # ├── data_batch_4
+    # ├── data_batch_5
+    # ├── readme.html
+    # └── test_batch
     # 2. 获取测试集.
     test_dataset = CIFAR10(root='./data', train=False, transform=ToTensor(), download=True)
     # 3. 返回数据集.
@@ -74,7 +86,7 @@ class ImageModel(nn.Module):
         self.linear1 = nn.Linear(576, 120)
         # 第2个隐藏层 (全连接层), 输入: 120, 输出: 84
         self.linear2 = nn.Linear(120, 84)
-        # 第3个隐藏层 (全连接层) -> 输出层,  输入: 84, 输出: 10
+        # 输出层,  输入: 84, 输出: 10
         self.output = nn.Linear(84, 10)
 
     # 2. 定义前向传播
@@ -93,8 +105,9 @@ class ImageModel(nn.Module):
 
         # 细节: 全连接层只能处理二维数据, 所以要将数据进行拉平 (8, 16, 6, 6) ->  (8, 576)
         # 参1: 样本数(行数), 参2: 列数(特征数), -1表示自动计算.
-        x = x.reshape(x.size(0), -1)  # 8行576列
-        # print(f'x.shape: {x.shape}')
+        x = x.reshape(x.size(0), -1)  # 8行576列（不考虑最后一批可能不够8的情况）
+        # print(f'x.shape: {x.shape}')  # 只有在模型训练环节才出现batch_size，所以在单独测试这个类时这里的x.shape为torch.Size([2, 576])，之所以是2，是因为betch_size至少为2，这是系统默认输出
+        # 只有在加入模型训练后才会输出torch.Size([betch_size, 576])
 
         # 第3层: 全连接层(加权求和) + 激励层(激活函数)
         x = torch.relu(self.linear1(x))
@@ -141,16 +154,16 @@ def train(train_dataset):
 
             # argmax() 返回最大值对应的索引, 充当 -> 该图片的 预测分类.
             # tensor([9, 8, 5, 5, 1, 5, 8, 5])
-            # print(torch.argmax(y_pred, dim=-1))     # -1这里表示行.   预测分类
-            # print(y)                                # 真实分类
-            # print(torch.argmax(y_pred, dim=-1) == y)    # 是否预测正确
-            # print((torch.argmax(y_pred, dim=-1) == y).sum())    # 预测正确的样本个数.
+            # print(torch.argmax(y_pred, dim=-1))                    # -1这里表示行.   预测分类
+            # print(y)                                               # 真实分类
+            # print(torch.argmax(y_pred, dim=-1) == y)               # 是否预测正确
+            # print((torch.argmax(y_pred, dim=-1) == y).sum())       # 预测正确的样本个数.
             total_correct += (torch.argmax(y_pred, dim=-1) == y).sum()
 
             # 5.2.8 统计当前批次的总损失.          第1批平均损失 * 第1批样本个数
             total_loss += loss.item() * len(y)  # [第1批总损失 +  第2批总损失 +  第3批总损失 +  ...]
             # 5.2.9  统计当前批次的总样本个数.
-            total_samples += len(y)
+            total_samples += len(y)      # 两个地方写len(y)或者1都可以，这里用len(y)是为了算acc时使用
             # break   每轮只训练1批, 提高训练效率, 减少训练时长, 只有测试会这么写, 实际开发绝不要这样做.
 
         # 5.2.10 走这里, 说明一轮训练完毕, 打印该轮的训练信息.
@@ -158,7 +171,7 @@ def train(train_dataset):
         # break     # 这里写break, 意味着只训练一轮.
 
     # 6. 保存模型.
-    torch.save(model.state_dict(), './model/image_model.pth')
+    torch.save(model.state_dict(), './model/image_classification.pth')
 
 # 4. 模型测试.
 def evaluate(test_dataset):
@@ -167,7 +180,7 @@ def evaluate(test_dataset):
     # 2. 创建模型对象.
     model = ImageModel()
     # 3. 加载模型参数.
-    model.load_state_dict(torch.load('./model/image_model.pth'))    # pickle文件
+    model.load_state_dict(torch.load('./model/image_classification.pth'))    # pickle文件
     # 4. 定义变量统计 预测正确的样本个数, 总样本个数.
     total_correct, total_samples = 0, 0
     # 5. 遍历数据加载器, 获取到 每批次 的数据.
@@ -190,23 +203,24 @@ def evaluate(test_dataset):
 
 # 5. 测试
 if __name__ == '__main__':
+    torch.manual_seed(123)
     # 1. 获取数据集.
     train_dataset, test_dataset = create_dataset()
-    # print(f'训练集: {train_dataset.data.shape}')       # (50000, 32, 32, 3)
-    # print(f'测试集: {test_dataset.data.shape}')        #  (10000, 32, 32, 3)
-    # # {'airplane': 0, 'automobile': 1, 'bird': 2, 'cat': 3, 'deer': 4, 'dog': 5, 'frog': 6, 'horse': 7, 'ship': 8, 'truck': 9}
-    # print(f'数据集类别: {train_dataset.class_to_idx}')
-    #
+    print(f'训练集: {train_dataset.data.shape}')       # (50000, 32, 32, 3)
+    print(f'测试集: {test_dataset.data.shape}')        #  (10000, 32, 32, 3)
+    print(f'数据集类别: {train_dataset.class_to_idx}')
+    # {'airplane': 0, 'automobile': 1, 'bird': 2, 'cat': 3, 'deer': 4, 'dog': 5, 'frog': 6, 'horse': 7, 'ship': 8, 'truck': 9}
+
     # # 图像展示
     # plt.figure(figsize=(2, 2))
     # plt.imshow(train_dataset.data[1111])      # 索引为1111的图像
-    # plt.title(train_dataset.targets[1111])
+    # plt.title(train_dataset.targets[1111])    # 图标题为图片所属的分类标签
     # plt.show()
 
     # 2. 搭建神经网络.
-    # model = ImageModel()
+    model = ImageModel()
     # 查看模型参数, 参1: 模型, 参2: 输入维度(CHW, 通道, 高, 宽), 参3: 批次大小
-    # summary(model, (3, 32, 32), batch_size=1)
+    summary(model, (3, 32, 32), batch_size=8, device='cpu')   # batch_size=1仅演示用，没啥影响
 
     # 3. 模型训练.
     # train(train_dataset)
