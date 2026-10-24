@@ -17,5 +17,11 @@ env/
 # 忽略代码运行结果产生图片
 /chapter03_Convolutional_Neural_Network/data/img_copy.png
 
+# 忽略CNN图像分类案列数据集，数据集太大了，运行代码时没有数据集会自动下载，有的话不会重复下载
+## 数据集压缩包
+/chapter03_Convolutional_Neural_Network/data/cifar-10-python.tar.gz
+## 解压后文件
+/chapter03_Convolutional_Neural_Network/data/cifar-10-batches-py
+
 ## 忽略 Jupyter 检查点
 #.ipynb_checkpoints/
