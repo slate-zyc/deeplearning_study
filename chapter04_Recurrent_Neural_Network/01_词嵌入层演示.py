@@ -33,13 +33,8 @@ def dm01():
     embed = nn.Embedding(len(words), 4)
 
     # 4. 获取每个词对象的下标索引.
-    # i = 0
-    # for word in words:
-    #     print(i, word)
-    #     i += 1
-
     # enumerate(): 返回列表中每个值 及其对应的 索引.
-    for i, word in enumerate(words):    # 效果同上.
+    for i, word in enumerate(words):
         # print(i, word)
 
         # 5. 把词索引(张量形式) 转成 词向量.
