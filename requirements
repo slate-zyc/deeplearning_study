@@ -1,14 +1,30 @@
 # Deep Learning 课程依赖清单
 #
-# 推荐使用阿里云镜像安装（在大陆网络下速度更快）：
-# conda/pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+# 本机环境: conda env "deeplearning-study" (Python 3.13), 已迁移到 E:\conda-envs\deeplearning-study
+# GPU: NVIDIA GeForce RTX 3060 Laptop (6GB) / 驱动 581.95 / CUDA 13.0
+#
+# ── 安装方式(很重要) ──────────────────────────────────────────────
+# 1) torch / torchvision 必须来自 PyTorch 官方 CUDA 源,
+#    不能用阿里云/清华等 PyPI 镜像 —— 镜像里的 Windows torch 是 CPU 构建,
+#    装完 torch.cuda.is_available() 还是 False.
+# 2) 其余普通包可以走镜像加速.
+#
+# 推荐命令(两步):
+#   pip install --index-url https://download.pytorch.org/whl/cu130 torch==2.14.1+cu130 torchvision==0.29.1+cu130
+#   pip install -r requirements -i https://mirrors.aliyun.com/pypi/simple/
+#
+# 下方 --extra-index-url 的作用: 让 pip 在解析 requirements 时也能找到 CUDA 版 wheel.
+# 如果是没有 NVIDIA 显卡的机器, 就把 torch/torchvision 两行删掉, 改成普通 CPU 版即可.
+#
+--extra-index-url https://download.pytorch.org/whl/cu130
 
 # ---------------- 深度学习框架 ----------------
-torch               # pytorch 框架
-torchsummary        # 查看神经网络结构
-torchvision         # PyTorch 官方生态系统中的一个核心库，专门为计算机视觉（Computer Vision）任务提供支持
+torch==2.14.1+cu130          # pytorch 框架(GPU 版, CUDA 13.0, 需求 Python 3.13)
+torchvision==0.29.1+cu130    # 计算机视觉库(必须和 torch 版本成对, 否则 CIFAR10/transforms 会报错)
+torchsummary                 # 查看神经网络结构
+
 # ---------------- 机器学习 / 数据处理 ----------------
-sklearn
+scikit-learn                 # 原文件写的是 sklearn, 它只是 scikit-learn 的过渡包, 直接用这个更规范
 numpy
 pandas
 
