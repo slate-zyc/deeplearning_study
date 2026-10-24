@@ -88,8 +88,8 @@ def train():
     # 4. 计算 和 查看模型参数.
     print('=================== 计算模型参数 ===================')
     # 参1: (神经网络)模型对象, 参2: 输入数据维度(5行3列)
-    summary(my_model, input_size=(5, 3))                # 数据维度是5行3列，batch不确定，所以默认-1，即模型输入是 [B, 5, 3] 的序列/图像块
-    summary(my_model, input_size=(3,), batch_size=5)    # 数据维度是一维，这里相当于是每个样本有3个特征，batch_size为5，即模型输入是 [B, 3] 的向量（最常见）
+    summary(my_model, input_size=(5, 3), device='cpu')                # 数据维度是5行3列，batch不确定，所以默认-1，即模型输入是 [B, 5, 3] 的序列/图像块
+    summary(my_model, input_size=(3,), batch_size=5, device='cpu')    # 数据维度是一维，这里相当于是每个样本有3个特征，batch_size为5，即模型输入是 [B, 3] 的向量（最常见）
 
     print('=================== 查看模型参数 ===================')
     for name, param in my_model.named_parameters():

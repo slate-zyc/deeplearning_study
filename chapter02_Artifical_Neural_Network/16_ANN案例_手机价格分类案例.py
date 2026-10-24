@@ -188,7 +188,7 @@ if __name__ == '__main__':
     # 计算模型参数
     # 参1: 模型对象. 参2: 输入数据的形状(批次大小, 输入特征数), 每批16条, 每条20列特征
     # summary(model, input_size=(16, input_dim))
-    summary(model, input_size=(input_dim,), batch_size=16)
+    summary(model, input_size=(input_dim,), batch_size=16, device='cpu')
 
     # 3. 模型训练
     train(train_dataset, input_dim, output_dim)
